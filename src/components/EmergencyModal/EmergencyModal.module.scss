@@ -1,0 +1,129 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba($color-slate-900, 0.60);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal;
+  padding: $space-6;
+  animation: fadeIn 250ms ease;
+}
+
+.modal {
+  position: relative;
+  @include glass-card-elevated;
+  background: rgba($color-white, 0.95);
+  border-radius: $radius-3xl;
+  padding: $space-10 $space-8;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  animation: slideUp 400ms $transition-spring;
+  overflow: hidden;
+}
+
+// Animated danger ring
+.modal__pulse {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: $radius-full;
+  background: radial-gradient(circle, rgba($color-danger, 0.10) 0%, transparent 70%);
+  pointer-events: none;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.modal__closeBtn {
+  position: absolute;
+  top: $space-4;
+  left: $space-4;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-full;
+  border: none;
+  background: rgba($color-slate-100, 0.80);
+  color: $color-slate-500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all $transition-fast;
+  padding: 0;
+
+  &:hover {
+    background: $color-slate-200;
+    color: $color-slate-700;
+  }
+}
+
+.modal__icon {
+  filter: drop-shadow(0 4px 16px rgba($color-danger, 0.30));
+  animation: bounce 1s ease-in-out 2;
+}
+
+.modal__title {
+  font-size: $text-2xl;
+  font-weight: $font-bold;
+  color: darken($color-danger, 10%);
+  margin: 0;
+}
+
+.modal__message {
+  font-size: $text-base;
+  color: $color-slate-600;
+  line-height: $leading-relaxed;
+  margin: 0;
+}
+
+.modal__callBtn {
+  @include btn-base;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-4 $space-8;
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  background: linear-gradient(135deg, $color-danger, darken($color-danger, 12%));
+  color: $color-white;
+  border-radius: $radius-full;
+  box-shadow: 0 6px 20px rgba($color-danger, 0.40);
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+
+  strong {
+    font-size: $text-lg;
+    letter-spacing: 0.05em;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba($color-danger, 0.50);
+    color: $color-white;
+  }
+}
+
+.modal__dismissBtn {
+  @include btn-base;
+  padding: $space-3 $space-6;
+  background: transparent;
+  color: $color-slate-500;
+  font-size: $text-sm;
+  border: 1px solid $color-slate-200;
+
+  &:hover {
+    background: $color-slate-50;
+    color: $color-slate-700;
+  }
+}

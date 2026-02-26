@@ -1,0 +1,98 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.header {
+  @include glass-card;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba($color-sky-200, 0.60);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $space-3 $space-6;
+  height: var(--header-height);
+
+  @include mobile-only {
+    padding: $space-3 $space-4;
+  }
+}
+
+// ── Mode Toggle ────────────────────────────────────────────────────────
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  background: rgba($color-sky-100, 0.60);
+  border-radius: $radius-full;
+  padding: $space-1;
+  border: 1px solid rgba($color-sky-200, 0.50);
+}
+
+.modeBtn {
+  @include btn-base;
+  padding: $space-2 $space-4;
+  font-size: $text-sm;
+  color: $color-slate-500;
+  background: transparent;
+  border-radius: $radius-full;
+  transition: all $transition-normal;
+  gap: $space-1;
+
+  span:first-child {
+    font-size: $text-base;
+  }
+
+  @include mobile-only {
+    padding: $space-2 $space-3;
+    span:last-child {
+      display: none;
+    }
+  }
+
+  &:hover {
+    color: $color-sky-600;
+    background: rgba($color-white, 0.60);
+  }
+
+  &--active {
+    background: $color-white;
+    color: $color-sky-600;
+    font-weight: $font-semibold;
+    box-shadow: $shadow-sm;
+  }
+}
+
+// ── Actions ───────────────────────────────────────────────────────────
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.clearBtn {
+  @include btn-base;
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  color: $color-slate-400;
+  border-radius: $radius-full;
+  padding: 0;
+
+  &:hover {
+    background: rgba($color-danger, 0.08);
+    color: $color-danger;
+  }
+}

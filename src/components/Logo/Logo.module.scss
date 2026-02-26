@@ -1,0 +1,49 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  text-decoration: none;
+
+  &--sm { gap: $space-2; }
+  &--xl { gap: $space-4; }
+}
+
+.logo__icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px rgba($color-sky-400, 0.35));
+  transition: transform $transition-spring;
+
+  .logo:hover & {
+    transform: scale(1.06);
+  }
+}
+
+.logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo__name {
+  font-size: $text-xl;
+  font-weight: $font-bold;
+  @include gradient-text($color-sky-500, $color-sky-700);
+  letter-spacing: 0.02em;
+
+  .logo--sm & { font-size: $text-base; }
+  .logo--lg & { font-size: $text-2xl; }
+  .logo--xl & { font-size: $text-3xl; }
+}
+
+.logo__tagline {
+  font-size: $text-xs;
+  font-weight: $font-normal;
+  color: $color-slate-400;
+  margin-top: 2px;
+
+  .logo--lg & { font-size: $text-sm; }
+  .logo--xl & { font-size: $text-base; }
+}

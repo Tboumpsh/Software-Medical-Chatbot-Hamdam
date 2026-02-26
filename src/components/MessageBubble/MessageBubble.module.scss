@@ -1,0 +1,223 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+// ── Bubble Container ──────────────────────────────────────────────────
+
+.bubble {
+  display: flex;
+  gap: $space-3;
+  align-items: flex-start;
+  @include slide-up(350ms);
+  max-width: 88%;
+
+  &--user {
+    flex-direction: row-reverse;
+    margin-right: auto;
+    margin-left: 0;
+    align-self: flex-end;
+  }
+
+  &--assistant {
+    align-self: flex-start;
+  }
+
+  & + & {
+    margin-top: $space-4;
+  }
+}
+
+// ── Avatar ────────────────────────────────────────────────────────────
+
+.bubble__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: $radius-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba($color-sky-100, 0.85);
+  border: 1.5px solid rgba($color-sky-200, 0.70);
+  color: $color-sky-600;
+
+  &--user {
+    background: rgba($color-sky-500, 0.12);
+    border-color: rgba($color-sky-300, 0.50);
+    color: $color-sky-700;
+  }
+}
+
+// ── Content Wrapper ───────────────────────────────────────────────────
+
+.bubble__content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+}
+
+// ── Text Bubble ───────────────────────────────────────────────────────
+
+.bubble__text,
+.bubble__markdown {
+  padding: $space-4 $space-5;
+  border-radius: $radius-2xl;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  word-break: break-word;
+
+  @include md {
+    font-size: $text-base;
+  }
+}
+
+// User bubble: sky blue gradient
+.bubble--user .bubble__text {
+  background: linear-gradient(135deg, $color-sky-500, $color-sky-600);
+  color: $color-white;
+  border-top-left-radius: $radius-sm;
+  box-shadow: 0 4px 20px rgba($color-sky-400, 0.30);
+}
+
+// Assistant bubble: glassy white
+.bubble--assistant .bubble__markdown {
+  @include glass-card;
+  color: $color-slate-700;
+  border-top-right-radius: $radius-sm;
+
+  // Markdown styles inside assistant bubble
+  :global(.paragraph) {
+    margin-bottom: $space-3;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  :global(.heading-2) {
+    font-size: $text-base;
+    font-weight: $font-bold;
+    color: $color-sky-700;
+    margin: $space-4 0 $space-2;
+  }
+
+  :global(.heading-3) {
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    color: $color-sky-600;
+    margin: $space-3 0 $space-1;
+  }
+
+  :global(.list) {
+    padding-right: $space-5;
+    margin: $space-2 0;
+  }
+
+  :global(.list-item) {
+    margin-bottom: $space-1;
+  }
+
+  :global(.inline-code) {
+    background: rgba($color-sky-100, 0.80);
+    color: $color-sky-700;
+    padding: 1px 6px;
+    border-radius: $radius-sm;
+    font-family: $font-mono;
+    font-size: 0.85em;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $color-sky-100;
+    margin: $space-3 0;
+  }
+
+  em {
+    color: $color-slate-500;
+    font-size: $text-sm;
+  }
+}
+
+// Emergency variant
+.bubble--emergency .bubble__markdown {
+  border: 1px solid rgba($color-danger, 0.30);
+  background: rgba($color-danger-bg, 0.85);
+}
+
+// Caution variant
+.bubble--caution .bubble__markdown {
+  border: 1px solid rgba($color-warning, 0.30);
+  background: rgba(#fffbeb, 0.90);
+}
+
+// Error variant
+.bubble--error .bubble__markdown {
+  border: 1px solid rgba($color-danger, 0.20);
+  background: rgba($color-danger-bg, 0.60);
+  color: darken($color-danger, 10%);
+}
+
+// ── Safety Badge ──────────────────────────────────────────────────────
+
+.bubble__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  background: rgba($color-danger, 0.12);
+  color: darken($color-danger, 10%);
+  border: 1px solid rgba($color-danger, 0.20);
+
+  &--caution {
+    background: rgba($color-warning, 0.12);
+    color: darken($color-warning, 20%);
+    border-color: rgba($color-warning, 0.25);
+  }
+}
+
+// ── Streaming Cursor ──────────────────────────────────────────────────
+
+.bubble__cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: $color-sky-400;
+  border-radius: 1px;
+  margin-right: 2px;
+  vertical-align: text-bottom;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+// ── Timestamp ─────────────────────────────────────────────────────────
+
+.bubble__time {
+  font-size: $text-xs;
+  color: $color-slate-400;
+  align-self: flex-end;
+  padding: 0 $space-2;
+}
+
+// ── Streaming shimmer ─────────────────────────────────────────────────
+
+.bubble--streaming .bubble__markdown {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($color-sky-100, 0.4) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    pointer-events: none;
+  }
+}
