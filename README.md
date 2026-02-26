@@ -1,4 +1,4 @@
-# 🤝 دستیار هوشمند پزشکی | Hamdam — همدم
+# 🤝 Hamdam — همدم
 
 > **دستیار هوشمند پزشکی | Intelligent Medical Assistant**
 > *Fully local AI engine · No external API required · Persian-first*
@@ -158,6 +158,21 @@ cp .env.example .env.local
 # فقط SESSION_SECRET را تنظیم کنید
 ```
 
+### ۴. افزودن فونت Dana
+
+فایل‌های Dana را از [Fontiran](https://fontiran.com) دریافت و در این مسیر قرار دهید:
+
+```
+public/fonts/dana/
+├── Dana-Regular.woff2
+├── Dana-Medium.woff2
+├── Dana-SemiBold.woff2
+└── Dana-Bold.woff2
+```
+
+> **fallback:** اگر Dana موجود نباشد، Vazirmatn از Google Fonts بارگذاری می‌شود.
+
+---
 
 ## اجرای پروژه
 
@@ -185,7 +200,27 @@ npm run test -- safetyCheck
 
 ---
 
-#
+## سیستم آیکون
+
+تمام آیکون‌ها SVG اختصاصی هستند. **هیچ emoji، فونت آیکون یا آیکون سیستمی** استفاده نشده:
+
+```tsx
+import {
+  StethoscopeIcon,  // حالت پزشکی
+  MonitorIcon,      // حالت پشتیبانی
+  BotIcon,          // آواتار دستیار
+  UserIcon,         // آواتار کاربر
+  SendIcon,         // دکمه ارسال
+  TrashIcon,        // پاک کردن
+  SirenIcon,        // اورژانس
+  PhoneIcon,        // تماس
+  WarningIcon,      // هشدار
+  HamdamLogoMark,   // لوگوی قلب در دست
+} from '@/components/Icons';
+```
+
+---
+
 ## سیستم طراحی
 
 - **رنگ‌ها:** آبی آسمانی + سفید (آرامش‌بخش)
@@ -208,6 +243,61 @@ npm run test -- safetyCheck
 
 ---
 
+## توسعه و افزودن محتوا
+
+### افزودن موضوع جدید به KB
+
+فایل `src/lib/ai/knowledgeBase.ts` را باز کنید و یک entry جدید به آرایه `KNOWLEDGE_BASE` اضافه کنید:
+
+```typescript
+{
+  id: 'new_topic',
+  category: 'general_symptoms',
+  tags: ['برچسب۱', 'برچسب۲'],
+  triggers: ['کلیدواژه۱', 'کلیدواژه۲', 'عبارت کامل'],
+  title: 'عنوان موضوع',
+  response: `پاسخ کامل به فارسی...`,
+  followUps: ['سوال مرتبط ۱', 'سوال مرتبط ۲'],
+  addDisclaimer: true,
+}
+```
+
+### افزودن آیکون جدید
+
+به `src/components/Icons/index.tsx` اضافه کنید:
+
+```tsx
+export function MyIcon({ size = 24, color = 'currentColor', className }: IconProps) {
+  return (
+    <Icon size={size} className={className}>
+      {/* SVG paths */}
+    </Icon>
+  );
+}
+```
+
+---
+
+## فهرست وظایف (Roadmap)
+
+### فاز ۱ – MVP (فعلی) ✅
+- موتور هوش مصنوعی محلی
+- ۲۰+ موضوع پزشکی فارسی
+- تشخیص اورژانس
+- آیکون‌های SVG اختصاصی
+- Streaming محلی
+
+### فاز ۲ – توسعه
+- [ ] افزودن ۵۰+ موضوع به KB
+- [ ] RAG محلی با vector search
+- [ ] اتصال نوبت‌دهی (بدون API خارجی)
+- [ ] پشتیبانی WhatsApp
+
+### فاز ۳ – بالینی
+- [ ] بررسی توسط متخصص پزشکی
+- [ ] آفلاین PWA
+
+---
 
 ## مجوز
 
@@ -215,3 +305,6 @@ MIT © 2024 Fatemeh Satouri
 
 ---
 
+<div align="center">
+همدم — کنارت هستیم · Made in Iran 🇮🇷
+</div>
